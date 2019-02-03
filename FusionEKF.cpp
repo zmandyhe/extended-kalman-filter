@@ -84,24 +84,24 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
       // TODO: Convert radar from polar to cartesian coordinates 
       //         and initialize state.
    		//measurement_pack.raw_measurements_ = VectorXd(3);
-    	double rho = measurement_pack.raw_measurements_(0);
-    	double phi = measurement_pack.raw_measurements_(1);
-    	double rho_dot = measurement_pack.raw_measurements_(2);
-		double px = rho * cos(phi);
-    	double py = rho * sin(phi);
-      	double vx = cos(phi) * rho_dot;
-        double vy = sin(phi) * rho_dot;
-      	ekf_.x_ << px, py, vx , vy;
+      double rho = measurement_pack.raw_measurements_(0);
+      double phi = measurement_pack.raw_measurements_(1);
+      double rho_dot = measurement_pack.raw_measurements_(2);
+      double px = rho * cos(phi);
+      double py = rho * sin(phi);
+      double vx = cos(phi) * rho_dot;
+      double vy = sin(phi) * rho_dot;
+      ekf_.x_ << px, py, vx , vy;
     }
     else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
       // TODO: Initialize state.
 		// read measurements
       	//measurement_pack.raw_measurements_ = VectorXd(2);
-      	double px =  measurement_pack.raw_measurements_(0);
-      	double py = measurement_pack.raw_measurements_(1);
-		double vx = 0.0;
-      	double vy = 0.0;
-      	ekf_.x_ << px,py,vx,vy;
+      double px =  measurement_pack.raw_measurements_(0);
+      double py = measurement_pack.raw_measurements_(1);
+      double vx = 0.0;
+      double vy = 0.0;
+      ekf_.x_ << px,py,vx,vy;
     }
     previous_timestamp_ = measurement_pack.timestamp_ ;
     // done initializing, no need to predict or update
@@ -168,7 +168,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     // TODO: Laser updates
     ekf_.H_ = H_laser_;
     ekf_.R_ = R_laser_;
-	ekf_.Update(measurement_pack.raw_measurements_);
+    ekf_.Update(measurement_pack.raw_measurements_);
   }
 
   // print the output
