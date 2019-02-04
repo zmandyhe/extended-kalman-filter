@@ -73,6 +73,7 @@ void KalmanFilter::Predict() {
   P_ = F_ * P_ * Ft + Q_;
 }
 ```
+
 	- 4) after prediction, we calls the update function to perform update according to sensor type. The raw_measurement_ object holds the measurement data of x_ and P_.
 
 ```
