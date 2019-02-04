@@ -11,7 +11,7 @@ This project involves three main steps for programming the Extended Kalman Filte
 3. updating where the bicycle is now based on incoming new sensor measurements
 Then the prediction and update steps repeat themselves in a loop. To measure how well my Kalman filter performs, I then calculate root mean squared error comparing the Extended Kalman filter results with the provided ground truth. These three steps (initialize, predict, update) plus calculating RMSE encapsulate the entire extended Kalman filter project.The overall fusion flow is illustrated as follows:
 
-![EKF Fusion Flow](https://github.com/zmandyhe/extended-kalman-filter/blob/master/pic/kl-algorithm-fusion-flow.PNG)
+![EKF Fusion Flow](https://github.com/zmandyhe/extended-kalman-filter/blob/master/pic/kf-algorithm-fusion-flow.PNG)
 
 # Prerequisites
 
@@ -24,7 +24,7 @@ The project has the following dependencies:
 
 For instructions on how to install these components on different operating systems, please, visit [Udacity's seed project](https://github.com/udacity/CarND-Extended-Kalman-Filter-Project). 
 
-##Compile and Run the Emulator
+## Compile and Run the Emulator
 Clone the repo and cd to it on a Terminal:
 
 1. run '/install-ubuntu.sh` to install wWebSocket, which is open source package that facilitates the connection between the simulator and code in C++. The package does this by setting up a web socket server connection from the C++ program to the simulator, which acts as the host.
@@ -34,7 +34,7 @@ Clone the repo and cd to it on a Terminal:
 5. run './ExtendedKF'
 6. Then click "Simulator" in GPU mode, select "Project 1/2 EKF and UKF", select "Start" to simulate the prediction and update cycle from the EKF program.
 
-##Description of the Fusion Flow in the Project
+## Description of the Fusion Flow in the Project
 
 ### Measurement Data
 The code in main.cpp reads in line by line from the data file "obj_pose-laser-radar-synthetic-input.txt" which contains Lidar and Radar data with timestamps. The measurement data for each line gets pushed onto a measurement_pack_list object. Each row contains a radar measurement and ground truth data, and the next row a lidar measurement data and ground truth data, whereas radar has three measurements (rho, phi, rhodot), lidar has two measurements (x, y). The ground truth for each line in the data file gets pushed onto ground_truth so RMSE can be calculated later from tools.cpp.
@@ -65,9 +65,8 @@ The overall code looks like the following:
 * defines the whole ProcessMeasurement() function that includes 
 	- 1) Initialize the state vector ekf_.x_
 	- 2) read in sensor data (Lidar and Radar respectively) with timestamp, 
-	- 3) calls the predict function which updates state transition matrix F and the process covariance matrix Q with  the time elapsed between the current and previous measurements "float dt = (measurement_pack.timestamp_ - previous_timestamp_) / 1000000.0; previous_timestamp_ = measurement_pack.timestamp_;" before calls the Predic() function from kalman_filter.cpp.
-	
-![update F matrix with elapsed time](https://github.com/zmandyhe/extended-kalman-filter/blob/master/pic/update-F.PNG)
+	- 3) calls the predict function which updates state transition [matrix F](https://github.com/zmandyhe/extended-kalman-filter/blob/master/pic/update-F.PNG) and the process covariance matrix Q with  the time elapsed between the current and previous measurements "float dt = (measurement_pack.timestamp_ - previous_timestamp_) / 1000000.0; previous_timestamp_ = measurement_pack.timestamp_;" before calls the Predic() function from kalman_filter.cpp.
+
 Even though Radar prediction function can be non-linear, but in this projet, I used a linear model to do the prediction for both Lidar and Radar. The prediction function is defined as follows:
 ```
 void KalmanFilter::Predict() {
@@ -77,6 +76,7 @@ void KalmanFilter::Predict() {
 }
 ```
 	- 4) after prediction, we calls the update function to perform update according to sensor type. The raw_measurement_ object holds the measurement data of x_ and P_.
+
 ```
   if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
     Hj_ = tools.CalculateJacobian(ekf_.x_);
@@ -95,8 +95,9 @@ void KalmanFilter::Predict() {
 
 ### Results
 To pass the project, the RMSE should be less than or equal to the values [.11, .11, 0.52, 0.52]. My final RMSE on dataset1 is [0.0973, 0.0855, 0.4513, 0.4399], on dataset2 is [0.0726, 0.0965, 0.4216, 0.4932].
-![RMSE on Dataset 1](https://github.com/zmandyhe/extended-kalman-filter/blob/master/pic/rmse-dataset1.PNG)
-![RMSE on Dataset 2](https://github.com/zmandyhe/extended-kalman-filter/blob/master/pic/rmse-dataset2.PNG)
+RMSE on Dataset 1             |  RMSE on Dataset 2
+:-------------------------:|:-------------------------:
+![RMSE on Dataset 1](https://github.com/zmandyhe/extended-kalman-filter/blob/master/pic/rmse-dataset1.PNG)|![RMSE on Dataset 2](https://github.com/zmandyhe/extended-kalman-filter/blob/master/pic/rmse-dataset2.PNG)
 
 ### Experiments on One Type of Sensor Data
 Analyze what happens when you turn off radar or lidar. Which sensor type provides more accurate readings? How does fusing the two sensors' data improve the tracking results?
