@@ -65,7 +65,10 @@ The overall code looks like the following:
 * defines the whole ProcessMeasurement() function that includes 
 	- 1) Initialize the state vector ekf_.x_
 	- 2) read in sensor data (Lidar and Radar respectively) with timestamp, 
-	- 3) calls the predict function which updates state transition [matrix F](https://github.com/zmandyhe/extended-kalman-filter/blob/master/pic/update-F.PNG) and the process covariance matrix Q with  the time elapsed between the current and previous measurements "float dt = (measurement_pack.timestamp_ - previous_timestamp_) / 1000000.0; previous_timestamp_ = measurement_pack.timestamp_;" before calls the Predic() function from kalman_filter.cpp. Even though Radar prediction function can be non-linear, but in this projet, I used a linear model to do the prediction for both Lidar and Radar. The prediction function is defined as follows:
+	- 3) calls the predict function which updates state transition [matrix F](https://github.com/zmandyhe/extended-kalman-filter/blob/master/pic/update-F.PNG) and the process covariance matrix Q with  the time elapsed between the current and previous measurements "float dt = (measurement_pack.timestamp_ - previous_timestamp_) / 1000000.0; previous_timestamp_ = measurement_pack.timestamp_;" before calls the Predic() function from kalman_filter.cpp. Even though Radar prediction function can be non-linear, but in this projet, I used a linear model to do the prediction for both Lidar and Radar. 
+	- 4) after prediction, we calls the update function to perform update according to sensor type. The raw_measurement_ object holds the measurement data of x_ and P_.
+	
+The prediction function is defined as follows:
 ```
 void KalmanFilter::Predict() {
   x_ = F_ * x_;
@@ -73,8 +76,7 @@ void KalmanFilter::Predict() {
   P_ = F_ * P_ * Ft + Q_;
 }
 ```
-
-	- 4) after prediction, we calls the update function to perform update according to sensor type. The raw_measurement_ object holds the measurement data of x_ and P_.
+The update function is defined as the following:
 
 ```
   if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
