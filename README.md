@@ -95,9 +95,8 @@ void KalmanFilter::Predict() {
 
 ### Results
 To pass the project, the RMSE should be less than or equal to the values [.11, .11, 0.52, 0.52]. My final RMSE on dataset1 is [0.0973, 0.0855, 0.4513, 0.4399], on dataset2 is [0.0726, 0.0965, 0.4216, 0.4932].
-RMSE on Dataset 1             |  RMSE on Dataset 2
-:-------------------------:|:-------------------------:
-![RMSE on Dataset 1](https://github.com/zmandyhe/extended-kalman-filter/blob/master/pic/rmse-dataset1.PNG)|![RMSE on Dataset 2](https://github.com/zmandyhe/extended-kalman-filter/blob/master/pic/rmse-dataset2.PNG)
+
+![alt-text-1](https://github.com/zmandyhe/extended-kalman-filter/blob/master/pic/rmse-dataset1.PNG "RMSE on Dataset 1") ![alt-text-2](https://github.com/zmandyhe/extended-kalman-filter/blob/master/pic/rmse-dataset2.PNG "RMSE on Dataset 2")
 
 ### Experiments on One Type of Sensor Data
 Analyze what happens when you turn off radar or lidar. Which sensor type provides more accurate readings? How does fusing the two sensors' data improve the tracking results?
