@@ -65,9 +65,7 @@ The overall code looks like the following:
 * defines the whole ProcessMeasurement() function that includes 
 	- 1) Initialize the state vector ekf_.x_
 	- 2) read in sensor data (Lidar and Radar respectively) with timestamp, 
-	- 3) calls the predict function which updates state transition [matrix F](https://github.com/zmandyhe/extended-kalman-filter/blob/master/pic/update-F.PNG) and the process covariance matrix Q with  the time elapsed between the current and previous measurements "float dt = (measurement_pack.timestamp_ - previous_timestamp_) / 1000000.0; previous_timestamp_ = measurement_pack.timestamp_;" before calls the Predic() function from kalman_filter.cpp.
-
-Even though Radar prediction function can be non-linear, but in this projet, I used a linear model to do the prediction for both Lidar and Radar. The prediction function is defined as follows:
+	- 3) calls the predict function which updates state transition [matrix F](https://github.com/zmandyhe/extended-kalman-filter/blob/master/pic/update-F.PNG) and the process covariance matrix Q with  the time elapsed between the current and previous measurements "float dt = (measurement_pack.timestamp_ - previous_timestamp_) / 1000000.0; previous_timestamp_ = measurement_pack.timestamp_;" before calls the Predic() function from kalman_filter.cpp. Even though Radar prediction function can be non-linear, but in this projet, I used a linear model to do the prediction for both Lidar and Radar. The prediction function is defined as follows:
 ```
 void KalmanFilter::Predict() {
   x_ = F_ * x_;
