@@ -11,7 +11,7 @@ This project involves three main steps for programming the Extended Kalman Filte
 3. updating where the bicycle is now based on incoming new sensor measurements
 Then the prediction and update steps repeat themselves in a loop. To measure how well my Kalman filter performs, I then calculate root mean squared error comparing the Extended Kalman filter results with the provided ground truth. These three steps (initialize, predict, update) plus calculating RMSE encapsulate the entire extended Kalman filter project.The overall fusion flow is illustrated as follows:
 
-		![EKF Fusion Flow](https://github.com/zmandyhe/extended-kalman-filter/blob/master/pic/kf-algorithm-fusion-flow.PNG)
+![EKF Fusion Flow](https://github.com/zmandyhe/extended-kalman-filter/blob/master/pic/kf-algorithm-fusion-flow.PNG)
 
 # Prerequisites
 
