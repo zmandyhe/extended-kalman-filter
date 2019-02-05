@@ -48,8 +48,8 @@ FusionEKF::FusionEKF() {
   ekf_.P_ = MatrixXd(4, 4);
   ekf_.P_ << 1, 0, 0, 0,
             0, 1, 0, 0,
-            0, 0, 1000, 0,
-            0, 0, 0, 1000;
+            0, 0, 999, 0,
+            0, 0, 0, 999;
 
     // the initial transition matrix F_
   ekf_.F_ = MatrixXd(4, 4);
